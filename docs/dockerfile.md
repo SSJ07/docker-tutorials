@@ -37,14 +37,14 @@
   - `ARG` values not available once image get created
   - The running container can't access its value
   - _Syntax_: `ARG <variable_name> <variable_value>`
-- ENV
+- **ENV**
   - The `ENV` instruction helps to define default variables to use after container starts
   - Running dockerized application can access `ENV` variables
   - _Syntax_: `ENV <variable_name> <variable_value>`
 
 
 ### CMD vs ENTRYPOINT
-- CMD
+- **CMD**
   - `CMD` command is replaceable at runtime
   - Its default command and arguments that will be executed at container startup
   - If any other command gives at container startup then CMD will be overridden
@@ -66,13 +66,14 @@
   output: machine-hostname  # replaced default CMD command with hostname command
   ```
   
-- ENTRYPOINT is not replaceable at runtime.
+- **ENTRYPOINT** 
+  - `ENTRYPOINT` is not replaceable at runtime.
   - Its same as `CMD` command but can't be overriden easily at container run time
   - If multiple `ENTRYPOINT` commands in docker file then last one get executed
   - `ENTRYPOINT` command can be used with `CMD` command to provide default argument for `ENTRYPOINT` command
   - If we provide commands at container startup then it'll get appended to `ENTRYPOINT` command
-    - example: 
-    ```commandline
+  - example: 
+  ```
     FROM ubuntu:latest
     ENTRYPOINT ["echo", "Hello, Docker"]
     
@@ -86,8 +87,7 @@
     docker run entrypoint-image:v1 hostname
     
     output: Hello, Docker hostname
-  ```
-
+    ```
 ### ARG vs ENV
 - Both used to define variables
 - **ARG**
@@ -104,7 +104,6 @@
     
     docker build --build-arg BUILD_VERSION=2.4.0 -t new-image:v1 .
   ```
-
 - **ENV**
   - Its run time variables
   - `ENV` command used to set environment variable inside the container to use at run time
