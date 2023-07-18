@@ -44,8 +44,77 @@
 
 
 ### CMD vs ENTRYPOINT
-- TODO
+- CMD
+  - `CMD` command is replaceable at runtime
+  - Its default command and arguments that will be executed at container startup
+  - If any other command gives at container startup then CMD will be overridden
+  - If multiple `CMD` commands given then only last `CMD` will execute
+  - Example:
+  ``` commandline
+  FROM ubuntu:latest
+  CMD ["echo", "Hello, Docker"]
+  
+  docker build -t my-image:v1
+  docker run my-image:v1
+  
+  output: Hello, Docker
+  
+  2.
+  
+  docker run my-image:v1 hostname # hostname is runtime command
+  
+  output: machine-hostname  # replaced default CMD command with hostname command
+  ```
+  
+- ENTRYPOINT is not replaceable at runtime.
+  - Its same as `CMD` command but can't be overriden easily at container run time
+  - If multiple `ENTRYPOINT` commands in docker file then last one get executed
+  - `ENTRYPOINT` command can be used with `CMD` command to provide default argument for `ENTRYPOINT` command
+  - If we provide commands at container startup then it'll get appended to `ENTRYPOINT` command
+    - example: 
+    ```commandline
+    FROM ubuntu:latest
+    ENTRYPOINT ["echo", "Hello, Docker"]
+    
+    docker build -t entrypoint-image:v1
+    docker run entrypoint-image:v1
+    
+    output:  Hello, Docker
+    
+    2.
+    
+    docker run entrypoint-image:v1 hostname
+    
+    output: Hello, Docker hostname
+  ```
 
+### ARG vs ENV
+- Both used to define variables
+- **ARG**
+  - It is build time variables
+  - It passed `ARG` variables to the `docker build process` during build stage
+  - These variables are available only during build process
+  - These are not accessible inside container at run time
+  - We can use `--build-arg` option with `docker build` command to pass values to `ARG` variables
+  - Example:
+    ```
+    ARG BUILD_VERSION
+    ENV ENV_BUILD_VERSION=$BUILD_VERSION
+    RUN echo "Build version is: $ENV_BUILD_VERSION"    
+    
+    docker build --build-arg BUILD_VERSION=2.4.0 -t new-image:v1 .
+  ```
 
-### ARGS vs ENV
-- TODO
+- **ENV**
+  - Its run time variables
+  - `ENV` command used to set environment variable inside the container to use at run time
+  - These variables do exists during container lifetime
+  - Its used and consumed by container services
+  - Example:
+  ```commandline
+  ENV DB_PATH=<db/path>
+  ENV DB_USERNAME=Username
+  ENV DB_HOST=localhost
+  ENV DB_PORT=5000
+  ENV DB_ENV=prod
+```
