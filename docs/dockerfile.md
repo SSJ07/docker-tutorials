@@ -117,5 +117,3 @@
   ENV DB_PORT=5000
   ENV DB_ENV=prod
   ```
-
-![/docs/img.png](img.png)
