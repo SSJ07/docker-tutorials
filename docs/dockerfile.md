@@ -110,10 +110,12 @@
   - These variables do exists during container lifetime
   - Its used and consumed by container services
   - Example:
-  ```commandline
+  ```
   ENV DB_PATH=<db/path>
   ENV DB_USERNAME=Username
   ENV DB_HOST=localhost
   ENV DB_PORT=5000
   ENV DB_ENV=prod
-```
+  ```
+
+![/docs/img.png](img.png)
