@@ -117,3 +117,22 @@
   ENV DB_PORT=5000
   ENV DB_ENV=prod
   ```
+  
+
+### What is `--entrypoint` option?
+- `--entrypoint` option is used with `docker run` command
+- This option used to override `ENTRYPOINT` command in docker file for temporary
+- _Syntax_: `docker run --entrypoint <new_command> <image_name>:<tag> [--entrypoint arguments]`
+- Example:
+ ```
+ FROM ubuntu:latest
+ ENTRYPOINT ["echo", "Hello, Docker"]
+ 
+ docker build -t entrypoint-image:v1 .
+ docker run entrypoint-image:v1
+
+ Ouptput: Hello, Docker
+
+ docker run --entrypoint echo entrypoint-image:v1 "Hello, Shri"
+ 
+ Output: Hello, Shri
